@@ -1,9 +1,10 @@
+import CatWikiLogo from "./SVG Components/CatWikiLogo"
 
 
 function Header() {
   return (
-    <div>
-        
+    <div className="p-2">
+        <CatWikiLogo />
     </div>
   )
 }
