@@ -36,11 +36,15 @@ function MyCombobox() {
                         <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
                             Nothing found.
                         </div>
-                    ) : filteredPeople.map((person) => (
-                        <Combobox.Option key={person} value={person} className="p-2 hover:bg-[#9797971A] rounded-2xl cursor-pointer">
-                            {person}
-                        </Combobox.Option>
-                    ))}
+                    ) : filteredPeople.map((person) => {
+                        if (person == "") return
+                        
+                        return (
+                            <Combobox.Option key={person} value={person} className="p-2 hover:bg-[#9797971A] rounded-2xl cursor-pointer">
+                                {person}
+                            </Combobox.Option>
+                        )
+                    })}
                 </Combobox.Options>
             </div>
         </Combobox>
