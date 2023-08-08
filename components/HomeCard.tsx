@@ -1,20 +1,26 @@
 import Image from "next/image"
 import HeroImageLg from "../assets/HeroImagelg.png"
+import { useEffect, useState } from "react"
+import { useRouter } from 'next/router';
 import HeroImageMd from "../assets/HeroImagemd.png"
 import HeroImageSm from "../assets/HeroImagesm.png"
 import CatWikiIcon from "../assets/CatwikiLogo.svg"
-import { useEffect, useState } from "react"
 import getScreenSize from "../utils/getScreenSize"
 import SearchBar from "./SearchBar"
 import SearchIcon from "./SVG Components/SearchIcon"
 import SearchDialog from "./SearchDialog"
 
 
+
 function HomeCard() {
     const [screenSize, setScreenSize] = useState<"lg" | "md" | "sm">("md")
     const [isSearchDialogOpen, setIsSearchDialogOpen] = useState(false)
+    
+    const router = useRouter()
 
     useEffect(() => {
+        setScreenSize(getScreenSize())
+
         const handleResize = () => {
             setScreenSize(getScreenSize())
         }
@@ -60,7 +66,7 @@ function HomeCard() {
 
                 <div className="flex w-full my-5 md:my-16">
                     <p className="font-bold text-2xl sm:text-3xl md:text-5xl max-w-[537px]">66+ Breeds For you to discover</p>
-                    {screenSize == "lg" && <p className="font-bold text-lg ml-auto mt-auto cursor-pointer hover:text-[#8a5b39e1]">SEE MORE →</p>}
+                    {screenSize == "lg" && <p className="font-bold text-lg ml-auto mt-auto cursor-pointer hover:text-[#8a5b39e1]" onClick={()=>router.push("/cats")}>SEE MORE →</p>}
                 </div>
 
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 place-items-center w-full mb-5">
