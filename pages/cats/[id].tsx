@@ -8,9 +8,11 @@ import RedirectingScreen from '../../components/RedirectingScreen';
 import fetchBreedData from '../../utils/fetchBreedData';
 import fetchBreeds from '../../utils/fetchBreeds';
 import ErrorMessage from '../../components/ErrorMessage';
+import { useRouter } from 'next/router';
 
 function CatById({ breedData }: any) {
     const [isRedirecting, setIsRedirecting] = useState(false)
+    const router = useRouter()
 
     return (
         <div className="px-4 sm:px-14 md:px-20 min-h-screen flex flex-col">
@@ -23,7 +25,7 @@ function CatById({ breedData }: any) {
 
             <div className='flex flex-col items-center my-10'>
                 {breedData == null ?
-                    <ErrorMessage reload={location.reload} />
+                    <ErrorMessage reload={router.reload} />
                     :
                     <>
                         <div className='flex flex-col lg:flex-row justify-center gap-10 lg:gap-24'>
