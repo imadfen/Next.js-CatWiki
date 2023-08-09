@@ -3,28 +3,29 @@ import { Fragment, useState } from 'react'
 import SearchIcon from './SVG Components/SearchIcon'
 import XIcon from './SVG Components/XIcon'
 
-interface propsType {
-    isOpen: boolean,
-    onClose: () => void
+
+export interface breedType {
+    id: string,
+    name: string,
+    image: string,
 }
 
-const people = [
-    'Durward Reynolds',
-    'Kenton Towne',
-    'Therese Wunsch',
-    'Benedict Kessler',
-    'Katelyn Rohan',
-]
+interface propsType {
+    isOpen: boolean,
+    onClose: () => void,
+    options: breedType[],
+    redirectTo: (path: string) => void,
+}
 
-export default function SearchDialog({ isOpen, onClose }: propsType) {
-    const [selectedPerson, setSelectedPerson] = useState(people[0])
+export default function SearchDialog({ isOpen, onClose, options, redirectTo }: propsType) {
+    const [selectedBreed, setSelectedBreed] = useState<breedType>({ id: "", name: "", image: "" })
     const [query, setQuery] = useState('')
 
     const filteredPeople =
         query === ''
-            ? people
-            : people.filter((person) => {
-                return person.toLowerCase().includes(query.toLowerCase())
+            ? options
+            : options.filter((breed) => {
+                return breed.name.toLowerCase().includes(query.toLowerCase())
             })
 
     return (
@@ -55,16 +56,16 @@ export default function SearchDialog({ isOpen, onClose }: propsType) {
                         >
                             <Dialog.Panel className="max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                                 <div className="mt-1">
-                                    <Combobox value={selectedPerson} onChange={setSelectedPerson}>
+                                    <Combobox value={selectedBreed} onChange={setSelectedBreed}>
                                         <div className='w-full min-h-[350px] flex flex-col'>
                                             <button className='bg-[#9797971a] p-2 w-fit ml-auto mb-10 active:scale-95 transition-all duration-200' onClick={onClose}>
                                                 <XIcon fill="#000" />
                                             </button>
                                             <div className='flex items-center mb-3 ring ring-black rounded-full overflow-hidden'>
-                                                <Combobox.Input onChange={(event) => setQuery(event.target.value)} placeholder='Enter your breed' className="flex-grow h-full p-5 font-medium text-lg dark-placeholder outline-none" />
-                                                <button className='px-4'>
+                                                <Combobox.Input onChange={(event) => setQuery(event.target.value)} id="search" placeholder='Enter your breed' className="flex-grow h-full p-5 font-medium text-lg dark-placeholder outline-none" />
+                                                <label htmlFor="search" className='px-4'>
                                                     <SearchIcon fill='#000' />
-                                                </button>
+                                                </label>
                                             </div>
                                             <Combobox.Options>
                                                 <div className='max-h-[400px] overflow-y-auto'>
@@ -72,13 +73,11 @@ export default function SearchDialog({ isOpen, onClose }: propsType) {
                                                         <div className="relative cursor-default select-none py-2 w-full text-gray-700">
                                                             Nothing found.
                                                         </div>
-                                                    ) : filteredPeople.map((person) => {
-                                                        if (person == "") return
-
+                                                    ) : filteredPeople.map((breed) => {
                                                         return (
                                                             <div className='p-3 hover:bg-[#9797971A] rounded-2xl cursor-pointer text-lg font-medium'>
-                                                                <Combobox.Option key={person} value={person}>
-                                                                    {person}
+                                                                <Combobox.Option key={breed.id} value={breed.id} onClick={() => redirectTo("/cats/" + breed.id)}>
+                                                                    {breed.name}
                                                                 </Combobox.Option>
                                                             </div>
                                                         )
