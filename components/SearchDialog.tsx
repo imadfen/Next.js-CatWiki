@@ -7,7 +7,7 @@ import XIcon from './SVG Components/XIcon'
 export interface breedType {
     id: string,
     name: string,
-    image: string,
+    image?: string,
 }
 
 interface propsType {
