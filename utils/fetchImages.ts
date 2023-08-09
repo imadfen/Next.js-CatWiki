@@ -8,7 +8,7 @@ export default async function fetchImages(imagesApiUrl: string, apiKey: string, 
                 imagesList.push(cat.url)
             })
         } else {
-            throw new Error("failed to fetch");
+            return null
         }
 
         return imagesNumber == 1 ? imagesList[0] : imagesList

@@ -7,7 +7,7 @@ export default async function fetchBreedData(breedId: string) {
 
     const response = await fetch(`${breedsApiUrl}api_key=${apiKey}`)
     if (!response.ok)
-        throw new Error("Failed in load data");
+        return null;
 
     const data = await response.json()
     const breedData = data.filter((breed: any) => {
