@@ -9,6 +9,7 @@ import { useRouter } from 'next/router'
 import LoadingSpinner from '../components/LoadingSpinner'
 import RedirectingScreen from '../components/RedirectingScreen'
 import ErrorMessage from '../components/ErrorMessage'
+import fetchBreeds from '../utils/fetchBreeds'
 
 
 export default function Home() {
@@ -27,14 +28,7 @@ export default function Home() {
         setIsLoading(true)
         setErrorFetch(false)
 
-        fetch("/api/breeds")
-            .then(response => {
-                if (response.ok) {
-                    return response.json()
-                } else {
-                    throw new Error("Error loading data")
-                }
-            })
+        fetchBreeds()
             .then(data => {
                 setBreedsList(data.list)
                 setbreedExamples(data.examples)

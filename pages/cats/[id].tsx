@@ -5,6 +5,8 @@ import Head from 'next/head';
 import StatsBar from '../../components/StatsBar';
 import { useState } from 'react';
 import RedirectingScreen from '../../components/RedirectingScreen';
+import fetchBreedData from '../../utils/fetchBreedData';
+import fetchBreeds from '../../utils/fetchBreeds';
 
 function CatById({ breedData }: any) {
     const [isRedirecting, setIsRedirecting] = useState(false)
@@ -121,7 +123,7 @@ function CatById({ breedData }: any) {
                     <p className="text-4xl font-semibold">Other photos</p>
 
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-4 gap-10 self-center">
-                        {breedData.images.map((img: string, i: number) =>
+                        {breedData.images?.map((img: string, i: number) =>
                             <div key={i} className="relative min-w-[134px] h-[134px] md:min-w-[278px] md:h-[278px] rounded-3xl overflow-hidden border-transparent bg-gray-50">
                                 <Image src={img} alt="" priority layout="fill" sizes="170x170" objectFit="cover" className="absolute top-0 left-0" />
                             </div>
@@ -138,20 +140,8 @@ function CatById({ breedData }: any) {
 }
 
 export async function getStaticProps({ params }) {
-    const fetchBreeds = async () => {
-        const response = await fetch(process.env.APP_URL + "/api/cats/" + params.id)
-
-        if (response.ok) {
-            const data = await response.json()
-            return data
-        }
-
-        console.log("Error loading data");
-        return null
-    }
-
-    const breedData = await fetchBreeds()
-
+    const breedData = await fetchBreedData(params.id)
+    
     return {
         props: {
             breedData,
@@ -160,14 +150,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-    const response = await fetch(process.env.APP_URL + "/api/breeds");
-
-    if (!response.ok) {
-        console.log("Error loading data");
-        return
-    }
-
-    const catBreeds = await response.json()
+    const catBreeds = await fetchBreeds()
 
     const paths = catBreeds.list.map((breed: any) => ({
         params: { id: breed.id },

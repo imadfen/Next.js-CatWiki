@@ -5,7 +5,7 @@ import SearchIcon from './SVG Components/SearchIcon'
 export interface breedType {
     id: string,
     name: string,
-    image: string,
+    image?: string,
 }
 
 function MyCombobox({ options, redirectTo }: { options: breedType[], redirectTo: (path: string) => void, }) {

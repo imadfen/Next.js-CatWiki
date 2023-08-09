@@ -1,7 +1,6 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import orderCatsList from "../../../utils/orderCatsList";
+import orderCatsList from "./orderCatsList";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function fetchTopBreeds() {
     const topCatsIds = [
         { order: 1, id: "siam" },
         { order: 2, id: "mcoo" },
@@ -14,12 +13,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         { order: 9, id: "rblu" },
         { order: 10, id: "bslo" },
     ]
-    const apiKey = process.env.API_KEY;
-    const breedsApiUrl = process.env.BREEDS_API_URL;
+    const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+    const breedsApiUrl = process.env.NEXT_PUBLIC_BREEDS_API_URL;
 
     const response = await fetch(`${breedsApiUrl}api_key=${apiKey}`)
     if (!response.ok) {
-        return res.status(response.status).json({ error: "failed to fetch data" })
+        throw new Error("failed to fetch data")
     }
 
     const data = await response.json()
@@ -41,5 +40,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
     })
 
-    res.status(200).json(orderCatsList(topCatsData))
+    return orderCatsList(topCatsData) as {order: number, cat: any}[]
 }

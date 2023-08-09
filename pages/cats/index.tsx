@@ -7,6 +7,7 @@ import LoadingSpinner from "../../components/LoadingSpinner"
 import { useRouter } from "next/router"
 import RedirectingScreen from "../../components/RedirectingScreen"
 import ErrorMessage from "../../components/ErrorMessage"
+import fetchTopBreeds from "../../utils/fetchTopBreeds"
 
 interface catsObjType {
     order: number,
@@ -33,14 +34,7 @@ function Cats() {
         setIsLoading(true)
         setErrorFetch(false)
 
-        fetch("/api/cats")
-            .then(response => {
-                if (response.ok) {
-                    return response.json()
-                } else {
-                    throw new Error("Error loading data")
-                }
-            })
+        fetchTopBreeds()
             .then(data => {
                 setTopCatsList(data)
                 setIsLoading(false)
