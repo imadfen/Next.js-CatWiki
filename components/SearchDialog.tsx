@@ -75,8 +75,8 @@ export default function SearchDialog({ isOpen, onClose, options, redirectTo }: p
                                                         </div>
                                                     ) : filteredPeople.map((breed) => {
                                                         return (
-                                                            <div className='p-3 hover:bg-[#9797971A] rounded-2xl cursor-pointer text-lg font-medium'>
-                                                                <Combobox.Option key={breed.id} value={breed.id} onClick={() => redirectTo("/cats/" + breed.id)}>
+                                                            <div key={breed.id} className='p-3 hover:bg-[#9797971A] rounded-2xl cursor-pointer text-lg font-medium'>
+                                                                <Combobox.Option value={breed.name} onClick={() => redirectTo("/cats/" + breed.id)}>
                                                                     {breed.name}
                                                                 </Combobox.Option>
                                                             </div>

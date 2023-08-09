@@ -2,11 +2,15 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Image from 'next/image';
 import StatsBar from '../../components/StatsBar';
+import { useState } from 'react';
+import RedirectingScreen from '../../components/RedirectingScreen';
 
 function CatById({ breedData }: any) {
+    const [isRedirecting, setIsRedirecting] = useState(false)
+
     return (
         <div className="px-4 sm:px-14 md:px-20 min-h-screen flex flex-col">
-            <Header goHome />
+            <Header onGoHome={() => setIsRedirecting(true)} />
 
             <div className='flex flex-col items-center my-10'>
                 <div className='flex flex-col lg:flex-row justify-center gap-10 lg:gap-24'>
@@ -120,7 +124,9 @@ function CatById({ breedData }: any) {
                 </div>
             </div>
 
-            <Footer goHome />
+            <Footer onGoHome={() => setIsRedirecting(true)} />
+
+            {isRedirecting && <RedirectingScreen />}
         </div>
     )
 }

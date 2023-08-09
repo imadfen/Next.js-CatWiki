@@ -8,6 +8,7 @@ import { breedType } from '../components/SearchBar'
 import { useRouter } from 'next/router'
 import LoadingSpinner from '../components/LoadingSpinner'
 import RedirectingScreen from '../components/RedirectingScreen'
+import ErrorMessage from '../components/ErrorMessage'
 
 
 export default function Home() {
@@ -15,14 +16,14 @@ export default function Home() {
     const [breedExamples, setbreedExamples] = useState<breedType[]>([])
     const [isLoading, setIsLoading] = useState(false)
     const [isRedirecting, setIsRedirecting] = useState(false)
-    const [errorFetch, setErrorFetch] = useState(false)
+    const [errorFetch, setErrorFetch] = useState(true)
     const router = useRouter()
 
     useEffect(() => {
-        fetchDate()
+        fetchData()
     }, [])
 
-    const fetchDate = () => {
+    const fetchData = () => {
         setIsLoading(true)
         setErrorFetch(false)
 
@@ -68,7 +69,7 @@ export default function Home() {
 
                 {isLoading ? <LoadingSpinner color='#291507' />
                     :
-                    errorFetch ? "Error"
+                    errorFetch ? <ErrorMessage reload={fetchData} />
                         :
                         <>
                             <HomeCard breedsList={breedsList} examples={breedExamples} redirectTo={redirectTo} />

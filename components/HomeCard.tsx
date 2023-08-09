@@ -58,9 +58,9 @@ function HomeCard({ breedsList, examples, redirectTo }: { breedsList: breedType[
                     <div className="w-[60px] h-[3px] bg-[#4d270c] rounded-full"></div>
                 </div>
 
-                <div className="flex w-full my-5 md:my-16">
+                <div className="flex flex-col gap-3 lg:flex-row w-full my-5 md:my-16">
                     <p className="font-bold text-2xl sm:text-3xl md:text-5xl max-w-[537px]">66+ Breeds For you to discover</p>
-                    {screenSize == "lg" && <p className="font-bold text-lg ml-auto mt-auto cursor-pointer hover:text-[#8a5b39e1]" onClick={() => redirectTo("/cats")}>SEE MORE →</p>}
+                    <p className="text-sm font-semibold md:font-bold md:text-lg ml-auto mt-auto cursor-pointer hover:text-[#8a5b39e1]" onClick={() => redirectTo("/cats")}>SEE MORE →</p>
                 </div>
 
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 place-items-center w-full mb-5">
