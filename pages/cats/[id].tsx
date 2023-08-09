@@ -1,6 +1,7 @@
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Image from 'next/image';
+import Head from 'next/head';
 import StatsBar from '../../components/StatsBar';
 import { useState } from 'react';
 import RedirectingScreen from '../../components/RedirectingScreen';
@@ -10,6 +11,10 @@ function CatById({ breedData }: any) {
 
     return (
         <div className="px-4 sm:px-14 md:px-20 min-h-screen flex flex-col">
+            <Head>
+                <title>{breedData.breed.name} - CatWiki</title>
+            </Head>
+
             <Header onGoHome={() => setIsRedirecting(true)} />
 
             <div className='flex flex-col items-center my-10'>

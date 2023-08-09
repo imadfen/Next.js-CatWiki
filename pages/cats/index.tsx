@@ -1,3 +1,4 @@
+import Head from "next/head"
 import Image from "next/image"
 import Footer from "../../components/Footer"
 import Header from "../../components/Header"
@@ -58,6 +59,10 @@ function Cats() {
 
     return (
         <div className="px-4 sm:px-14 md:px-20 min-h-screen flex flex-col">
+            <Head>
+                <title>Top 10 Breeds - CatWiki</title>
+            </Head>
+
             <Header onGoHome={() => setIsRedirecting(true)} />
             <div className="flex-grow flex flex-col">
                 <p className="text-4xl font-bold my-5">Top 10 most searched breeds</p>
