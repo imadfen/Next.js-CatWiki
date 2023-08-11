@@ -9,11 +9,13 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import { useRouter } from 'next/router';
 import ErrorMessage from '../../components/ErrorMessage';
 import PageNotFoundContent from '../../components/PageNotFoundContent';
+import RedirectingScreen from '../../components/RedirectingScreen';
 
 function CatById() {
-    const [isLoading, setIsLoading] = useState(true)
-    const [isErrorFetch, setIsErrorFetch] = useState(false)
     const [breedData, setBreedData] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
+    const [isRedirecting, setIsRedirecting] = useState(false)
+    const [isErrorFetch, setIsErrorFetch] = useState(false)
     const router = useRouter()
     const breedId = router.query.id as string
 
@@ -43,7 +45,7 @@ function CatById() {
                 <title>{breedData ? breedData.breed.name + " | " : ""}CatWiki</title>
             </Head>
 
-            <Header goHome />
+            <Header onGoHome={() => setIsRedirecting(true)} />
 
             <div className='flex flex-col items-center flex-grow my-10'>
                 {isLoading ? <LoadingSpinner color="#291507" />
@@ -166,7 +168,9 @@ function CatById() {
                 }
             </div>
 
-            <Footer goHome />
+            <Footer onGoHome={() => setIsRedirecting(true)} />
+
+            {isRedirecting && <RedirectingScreen />}
         </div>
     )
 }

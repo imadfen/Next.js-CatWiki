@@ -5,6 +5,7 @@ import Header from "../../components/Header"
 import { useEffect, useState } from "react"
 import LoadingSpinner from "../../components/LoadingSpinner"
 import { useRouter } from "next/router"
+import RedirectingScreen from "../../components/RedirectingScreen"
 import ErrorMessage from "../../components/ErrorMessage"
 import fetchTopBreeds from "../../utils/fetchTopBreeds"
 
@@ -21,6 +22,7 @@ interface catsObjType {
 function Cats() {
     const [topCatsList, setTopCatsList] = useState<catsObjType[]>([])
     const [isLoading, setIsLoading] = useState(false)
+    const [isRedirecting, setIsRedirecting] = useState(false)
     const [errorFetch, setErrorFetch] = useState(false)
     const router = useRouter()
 
@@ -46,6 +48,7 @@ function Cats() {
 
     const goToCat = (id: string) => {
         router.push("/cats/" + id)
+        setIsRedirecting(true)
     }
 
     return (
@@ -54,7 +57,7 @@ function Cats() {
                 <title>Top 10 Breeds | CatWiki</title>
             </Head>
 
-            <Header goHome />
+            <Header onGoHome={() => setIsRedirecting(true)} />
             <div className="flex-grow flex flex-col">
                 <p className="text-4xl font-bold my-5">Top 10 most searched breeds</p>
 
@@ -82,7 +85,10 @@ function Cats() {
                 </div>
             </div>
 
-            <Footer goHome />
+            <Footer onGoHome={() => setIsRedirecting(true)} />
+
+
+            {isRedirecting && <RedirectingScreen />}
         </div>
     )
 }
