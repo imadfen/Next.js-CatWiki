@@ -5,7 +5,6 @@ import Header from "../../components/Header"
 import { useEffect, useState } from "react"
 import LoadingSpinner from "../../components/LoadingSpinner"
 import { useRouter } from "next/router"
-import RedirectingScreen from "../../components/RedirectingScreen"
 import ErrorMessage from "../../components/ErrorMessage"
 import fetchTopBreeds from "../../utils/fetchTopBreeds"
 
@@ -22,7 +21,6 @@ interface catsObjType {
 function Cats() {
     const [topCatsList, setTopCatsList] = useState<catsObjType[]>([])
     const [isLoading, setIsLoading] = useState(false)
-    const [isRedirecting, setIsRedirecting] = useState(false)
     const [errorFetch, setErrorFetch] = useState(false)
     const router = useRouter()
 
@@ -48,20 +46,19 @@ function Cats() {
 
     const goToCat = (id: string) => {
         router.push("/cats/" + id)
-        setIsRedirecting(true)
     }
 
     return (
         <div className="px-4 sm:px-14 md:px-20 min-h-screen flex flex-col">
             <Head>
-                <title>Top 10 Breeds - CatWiki</title>
+                <title>Top 10 Breeds | CatWiki</title>
             </Head>
 
-            <Header onGoHome={() => setIsRedirecting(true)} />
+            <Header goHome />
             <div className="flex-grow flex flex-col">
                 <p className="text-4xl font-bold my-5">Top 10 most searched breeds</p>
 
-                <div className="py-10 flex flex-col">
+                <div className="py-10 flex flex-col flex-grow">
                     {isLoading ? <LoadingSpinner color="#291507" />
                         :
                         errorFetch ? <ErrorMessage reload={fetchData} />
@@ -85,10 +82,7 @@ function Cats() {
                 </div>
             </div>
 
-            <Footer onGoHome={() => setIsRedirecting(true)} />
-
-
-            {isRedirecting && <RedirectingScreen />}
+            <Footer goHome />
         </div>
     )
 }

@@ -7,13 +7,19 @@ export default async function fetchBreedData(breedId: string) {
 
     const response = await fetch(`${breedsApiUrl}api_key=${apiKey}`)
     if (!response.ok)
-        return null;
+        throw new Error("failed to fetch data");
+
 
     const data = await response.json()
-    const breedData = data.filter((breed: any) => {
+    const breedsArray = data.filter((breed: any) => {
         if (breed.id == breedId) return breed
-    })[0]
-    
+    })
+
+    if (breedsArray.length == 0)
+        return null
+
+    const breedData = breedsArray[0]
+
     const breedImages = await fetchImages(imagesApiUrl, apiKey, 8, breedData.id)
 
     return ({ breed: breedData, images: typeof breedImages == "string" ? [breedImages] : breedImages })

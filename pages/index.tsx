@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react'
 import { breedType } from '../components/SearchBar'
 import { useRouter } from 'next/router'
 import LoadingSpinner from '../components/LoadingSpinner'
-import RedirectingScreen from '../components/RedirectingScreen'
 import ErrorMessage from '../components/ErrorMessage'
 import fetchBreeds from '../utils/fetchBreeds'
 
@@ -15,9 +14,8 @@ import fetchBreeds from '../utils/fetchBreeds'
 export default function Home() {
     const [breedsList, setBreedsList] = useState<breedType[]>([])
     const [breedExamples, setbreedExamples] = useState<breedType[]>([])
-    const [isLoading, setIsLoading] = useState(false)
-    const [isRedirecting, setIsRedirecting] = useState(false)
-    const [errorFetch, setErrorFetch] = useState(true)
+    const [isLoading, setIsLoading] = useState(true)
+    const [errorFetch, setErrorFetch] = useState(false)
     const router = useRouter()
 
     useEffect(() => {
@@ -41,11 +39,6 @@ export default function Home() {
             })
     }
 
-    const redirectTo = (path: string) => {
-        setIsRedirecting(true)
-        router.push(path)
-    }
-
     return (
         <div className="px-4 sm:px-14 md:px-20">
             <Head>
@@ -66,16 +59,13 @@ export default function Home() {
                     errorFetch ? <ErrorMessage reload={fetchData} />
                         :
                         <>
-                            <HomeCard breedsList={breedsList} examples={breedExamples} redirectTo={redirectTo} />
+                            <HomeCard breedsList={breedsList} examples={breedExamples} redirectTo={router.push} />
 
                             <HomeSecondSection />
                         </>
                 }
-
                 <Footer />
             </div>
-
-            {isRedirecting && <RedirectingScreen />}
         </div>
     )
 }
