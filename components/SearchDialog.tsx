@@ -63,7 +63,7 @@ export default function SearchDialog({ isOpen, onClose, options, redirectTo }: p
                                             </button>
                                             <div className='w-full flex items-center mb-3 ring ring-black rounded-full overflow-hidden'>
                                                 <Combobox.Input onChange={(event) => setQuery(event.target.value)} id="search" placeholder='Enter your breed' className="flex-grow h-full p-5 font-medium text-lg dark-placeholder outline-none" />
-                                                <label htmlFor="search" className='px-4'>
+                                                <label htmlFor="search" className='pr-4'>
                                                     <SearchIcon fill='#000' />
                                                 </label>
                                             </div>

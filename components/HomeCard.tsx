@@ -34,7 +34,7 @@ function HomeCard({ breedsList, examples, redirectTo }: { breedsList: breedType[
 
                 <div className="absolute top-0 left-0 z-10 h-full w-full grid grid-cols-2 px-10">
                     <div className="relative w-full h-full">
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col justify-center w-2/3">
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col justify-center w-full md:w-2/3">
                             <Image src={CatWikiIcon} alt="CatWiki Icon" className="w-2/3 invert contrast-[150%]" priority />
 
                             <p className="my-3 font-semibold text-white text-xs sm:text-sm md:text-md lg:text-2xl">Get to know more about your cat breed</p>
@@ -42,9 +42,9 @@ function HomeCard({ breedsList, examples, redirectTo }: { breedsList: breedType[
                             {screenSize == "lg" ?
                                 <SearchBar options={breedsList} redirectTo={redirectTo} />
                                 :
-                                <button className="bg-white flex rounded-full overflow-hidden p-2" onClick={() => setIsSearchDialogOpen(true)}>
-                                    <p className="flex-grow text-sm">Search</p>
-                                    <SearchIcon className="" fill="#000" />
+                                <button className="bg-white flex items-center rounded-full overflow-hidden p-1 md:p-2 w-fit" onClick={() => setIsSearchDialogOpen(true)}>
+                                    <p className="text-xs md:text-sm px-2 text-center">Search</p>
+                                    <SearchIcon fill="#000" />
                                 </button>
                             }
                         </div>
