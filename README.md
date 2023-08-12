@@ -33,8 +33,15 @@ git clone https://github.com/imadfen/Next.js-CatWiki.git
 ```bach
 cd Next.js-CatWiki
 ```
+3. **Create a .env file in the root of your project and set it as follow:**
 
-3. **Install dependencies:**
+```env
+NEXT_PUBLIC_API_KEY=your_api_key_from_https://thecatapi.com/
+NEXT_PUBLIC_BREEDS_API_URL='https://api.thecatapi.com/v1/breeds?'
+NEXT_PUBLIC_IMAGES_API_URL='https://api.thecatapi.com/v1/images/search?'
+```
+
+4. **Install dependencies:**
 ```bach
 npm install
 # or
