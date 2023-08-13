@@ -8,6 +8,8 @@ import getScreenSize from "../utils/getScreenSize"
 import SearchBar, { breedType } from "./SearchBar"
 import SearchIcon from "./SVG Components/SearchIcon"
 import SearchDialog from "./SearchDialog"
+import LoadingSpinner from "./LoadingSpinner"
+import ExampleSkeleton from "./skeleton/ExampleSkeleton"
 
 function HomeCard({ breedsList, examples, redirectTo }: { breedsList: breedType[], examples: breedType[], redirectTo: (path: string) => void }) {
     const [screenSize, setScreenSize] = useState<"lg" | "md" | "sm">("md")
@@ -42,9 +44,13 @@ function HomeCard({ breedsList, examples, redirectTo }: { breedsList: breedType[
                             {screenSize == "lg" ?
                                 <SearchBar options={breedsList} redirectTo={redirectTo} />
                                 :
-                                <button className="bg-white flex items-center rounded-full overflow-hidden p-1 md:p-2 w-fit" onClick={() => setIsSearchDialogOpen(true)}>
-                                    <p className="text-xs md:text-sm px-2 text-center">Search</p>
-                                    <SearchIcon fill="#000" />
+                                <button className="bg-white flex items-center rounded-full overflow-hidden p-1 md:p-2 w-fit" onClick={() => setIsSearchDialogOpen(true)} disabled={breedsList == null}>
+                                    <p className={`text-xs md:text-sm px-2 text-center ${!breedsList && "text-gray-300"}`}>Search</p>
+                                    {!breedsList ?
+                                        <LoadingSpinner color="#4d270c" width={24} height={24} />
+                                        :
+                                        <SearchIcon fill="#000" />
+                                    }
                                 </button>
                             }
                         </div>
@@ -63,19 +69,28 @@ function HomeCard({ breedsList, examples, redirectTo }: { breedsList: breedType[
                     <p className="text-sm font-semibold md:font-bold md:text-lg ml-auto mt-auto cursor-pointer hover:text-[#8a5b39e1]" onClick={() => redirectTo("/cats")}>SEE MORE →</p>
                 </div>
 
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 place-items-center w-full mb-5">
-                    {examples.map((cat, i) => (
-                        <div key={i} className="hover:scale-105 transition-transform duration-200 cursor-pointer active:scale-95" onClick={() => redirectTo("/cats/" + cat.id)}>
-                            <div className="relative w-[134px] h-[134px] sm:w-[220px] sm:h-[220px] rounded-3xl overflow-hidden bg-gray-200">
-                                <Image src={cat.image} alt="" layout="fill" objectFit="cover" className="absolute top-0 left-0" />
+                {!examples ?
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 place-items-center w-full mb-5">
+                        <ExampleSkeleton />
+                        <ExampleSkeleton />
+                        <ExampleSkeleton />
+                        <ExampleSkeleton />
+                    </div>
+                    :
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 place-items-center w-full mb-5">
+                        {examples.map((cat, i) => (
+                            <div key={i} className="hover:scale-105 transition-transform duration-200 cursor-pointer active:scale-95" onClick={() => redirectTo("/cats/" + cat.id)}>
+                                <div className="relative w-[134px] h-[134px] sm:w-[220px] sm:h-[220px] rounded-3xl overflow-hidden bg-gray-200">
+                                    <Image src={cat.image} alt="" layout="fill" objectFit="cover" className="absolute top-0 left-0" />
+                                </div>
+                                <p className="text-sm md:text-lg font-semibold">{cat.name}</p>
                             </div>
-                            <p className="text-sm md:text-lg font-semibold">{cat.name}</p>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                }
             </div>
 
-            <SearchDialog isOpen={screenSize != "lg" && isSearchDialogOpen} onClose={() => setIsSearchDialogOpen(false)} options={breedsList} redirectTo={redirectTo} />
+            <SearchDialog isOpen={screenSize != "lg" && isSearchDialogOpen && breedsList != null} onClose={() => setIsSearchDialogOpen(false)} options={breedsList} redirectTo={redirectTo} />
         </div>
     )
 }

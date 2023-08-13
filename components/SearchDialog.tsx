@@ -21,7 +21,7 @@ export default function SearchDialog({ isOpen, onClose, options, redirectTo }: p
     const [selectedBreed, setSelectedBreed] = useState<breedType>({ id: "", name: "", image: "" })
     const [query, setQuery] = useState('')
 
-    const filteredPeople =
+    const filteredBreeds =
         query === ''
             ? options
             : options.filter((breed) => {
@@ -69,11 +69,11 @@ export default function SearchDialog({ isOpen, onClose, options, redirectTo }: p
                                             </div>
                                             <Combobox.Options>
                                                 <div className='max-h-[400px] overflow-y-auto'>
-                                                    {filteredPeople.length === 0 && query !== '' ? (
+                                                    {filteredBreeds == null && query !== '' ? (
                                                         <div className="relative cursor-default select-none py-2 w-full text-gray-700">
                                                             Nothing found.
                                                         </div>
-                                                    ) : filteredPeople.map((breed) => {
+                                                    ) : filteredBreeds && filteredBreeds.map((breed) => {
                                                         return (
                                                             <div key={breed.id} className='p-3 hover:bg-[#9797971A] rounded-2xl cursor-pointer text-lg font-medium'>
                                                                 <Combobox.Option value={breed.name} onClick={() => redirectTo("/cats/" + breed.id)}>

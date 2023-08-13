@@ -6,15 +6,13 @@ import Footer from '../components/Footer'
 import { useEffect, useState } from 'react'
 import { breedType } from '../components/SearchBar'
 import { useRouter } from 'next/router'
-import LoadingSpinner from '../components/LoadingSpinner'
 import RedirectingScreen from '../components/RedirectingScreen'
-import ErrorMessage from '../components/ErrorMessage'
 import fetchBreeds from '../utils/fetchBreeds'
 
 
 export default function Home() {
-    const [breedsList, setBreedsList] = useState<breedType[]>([])
-    const [breedExamples, setbreedExamples] = useState<breedType[]>([])
+    const [breedsList, setBreedsList] = useState<breedType[] | null>(null)
+    const [breedExamples, setbreedExamples] = useState<breedType[] | null>(null)
     const [isLoading, setIsLoading] = useState(true)
     const [isRedirecting, setIsRedirecting] = useState(false)
     const [errorFetch, setErrorFetch] = useState(false)
@@ -60,18 +58,8 @@ export default function Home() {
 
             <div className='min-h-screen flex flex-col'>
                 <Header />
-
-                {isLoading ? <LoadingSpinner color='#291507' />
-                    :
-                    errorFetch ? <ErrorMessage reload={fetchData} />
-                        :
-                        <>
-                            <HomeCard breedsList={breedsList} examples={breedExamples} redirectTo={redirectTo} />
-
-                            <HomeSecondSection />
-                        </>
-                }
-
+                <HomeCard breedsList={breedsList} examples={breedExamples} redirectTo={redirectTo} />
+                <HomeSecondSection />
                 <Footer />
             </div>
 
